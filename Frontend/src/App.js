@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Header from "./components/layout/Header/Header";
 import Home from "./components/Home/Home";
 import Footer from "./components/layout/Footer/Footer";
@@ -41,38 +41,30 @@ import Contact from "./components/Contact/Contact";
 import NotFound from "./components/layout/NotFound/NotFound";
 
 function App() {
-  console.log(window.location.pathname);
+  const host=process.env.REACT_APP_HOST
+
   const { isAuthenticated, loading, user } = useSelector((state) => state.user);
+
   const [stripeApiKey, setStripeApiKey] = useState("");
 
-  //  GETTING   AXIOS ERROR
   async function getStripeApiKey() {
     try {
-      const response = await axios.get("/api/v1/stripeapiKey", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      setStripeApiKey(response.data.stripeApiKey);
+      const { data } = await axios.get(`/api/v1/stripeapikey`);
+      setStripeApiKey(data.stripeApiKey);
     } catch (error) {
-      console.error("Error fetching Stripe API key:", error);
-      // Handle the error, for example, by displaying a message to the user
+      console.error("Error fetching Stripe API key:", error.response || error.message);
     }
   }
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      // Only dispatch loadUser if the user is not authenticated
-      store.dispatch(loadUser());
-    }
+    store.dispatch(loadUser());
     getStripeApiKey();
-  }, [isAuthenticated]);
+  }, []);
 
-  // This will not allow to inspect
   window.addEventListener("contextmenu", (e) => e.preventDefault());
+
   return (
-    <Router>
+    <BrowserRouter>
       <ScrollToTop />
       <Header />
       {stripeApiKey && (
@@ -100,7 +92,6 @@ function App() {
         <Route exact path="/product/:id" element={<ProductDetails />} />
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/contactUs" element={<Contact />} />
-
         <Route
           exact
           path="/account"
@@ -113,7 +104,6 @@ function App() {
             </ProtectedRoute2>
           }
         />
-
         <Route
           exact
           path="/me/update"
@@ -126,7 +116,6 @@ function App() {
             </ProtectedRoute2>
           }
         />
-
         <Route
           exact
           path="/password/update"
@@ -136,7 +125,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route exact path="/password/forgot" element={<ForgotPassword />} />
         <Route
           exact
@@ -145,7 +133,6 @@ function App() {
         />
         <Route exact path="/login" element={<LoginSignup />} />
         <Route exact path="/cart" element={<Cart />} />
-
         <Route
           exact
           path="/login/shipping"
@@ -159,7 +146,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/success"
@@ -173,7 +159,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/order"
@@ -183,8 +168,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        {/* ADMIN */}
         <Route
           exact
           path="/Admin/dashboard"
@@ -199,7 +182,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/Admin/products"
@@ -214,7 +196,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/Admin/product"
@@ -229,7 +210,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/Admin/product/:id"
@@ -244,7 +224,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/Admin/orders"
@@ -259,7 +238,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/Admin/order/:id"
@@ -274,7 +252,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/Admin/users"
@@ -289,7 +266,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/Admin/user/:id"
@@ -304,7 +280,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/Admin/reviews"
@@ -351,10 +326,8 @@ function App() {
           }
         />
       </Routes>
-
-      {/* {isAuthenticated && <UserOptions user={user}/>} */}
       <Footer />
-    </Router>
+    </BrowserRouter>
   );
 }
 

@@ -2,12 +2,7 @@ const app = require('./app');
 const cloudinary = require('cloudinary');
 const mongoose = require('mongoose');
 
-// Handling uncaught Exception
-process.on("uncaughtException", (err) => {
-    console.log(`Error: ${err.message}`);
-    console.log(`Shutting down the server due to an uncaught exception`);
-    process.exit(1);
-});
+ 
 
 // Load config
 if (process.env.NODE_ENV !== "PRODUCTION") {
@@ -25,10 +20,7 @@ mongoose.connect(process.env.DB_URI)
     .then((data) => {
         console.log(`MongoDB connected to ${data.connection.host}`);
     })
-    .catch((err) => {
-        console.error(`Database connection error: ${err.message}`);
-        process.exit(1);
-    });
+    
 
 // Cloudinary config
 cloudinary.config({

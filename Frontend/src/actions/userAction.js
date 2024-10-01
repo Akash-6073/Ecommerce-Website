@@ -50,6 +50,7 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       config // here we use config for headers [applicaation/json , content type]
     );
+    
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data.user,
@@ -90,6 +91,9 @@ export const loadUser = () => async (dispatch) => {
     dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
   }
 };
+
+
+
 
 //LOGOUT
 export const logout = () => async (dispatch) => {
