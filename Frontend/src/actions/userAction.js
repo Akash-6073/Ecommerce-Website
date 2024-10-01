@@ -38,7 +38,7 @@ import {
 } from "../constants/userConstants";
 import axios from "axios";
 
-const host=process.env.REACT_APP_HOST
+const host=""
 
 // we get the data from the backend LOGIN
 export const login = (email, password) => async (dispatch) => {

@@ -31,7 +31,7 @@ import {
 
 import axios from "axios";
 
-const host=process.env.REACT_APP_HOST
+const host=""
 
 // we will get data here from the backend of "getProduct"
 export const getProduct =
