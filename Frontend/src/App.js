@@ -41,7 +41,7 @@ import Contact from "./components/Contact/Contact";
 import NotFound from "./components/layout/NotFound/NotFound";
 
 function App() {
-  const host=process.env.REACT_APP_HOST
+  // const host=process.env.REACT_APP_HOST
 
   const { isAuthenticated, loading, user } = useSelector((state) => state.user);
 
@@ -49,7 +49,7 @@ function App() {
 
   async function getStripeApiKey() {
     try {
-      const { data } = await axios.get(`${host}/api/v1/stripeapikey`);
+      const { data } = await axios.get(`/api/v1/stripeapikey`);
       setStripeApiKey(data.stripeApiKey);
     } catch (error) {
       console.error("Error fetching Stripe API key:", error.response || error.message);
