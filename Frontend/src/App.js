@@ -41,7 +41,7 @@ import Contact from "./components/Contact/Contact";
 import NotFound from "./components/layout/NotFound/NotFound";
 
 function App() {
-  const host=""
+  const host=process.env.REACT_APP_HOST
 
   const { isAuthenticated, loading, user } = useSelector((state) => state.user);
 

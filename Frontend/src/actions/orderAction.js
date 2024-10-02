@@ -23,7 +23,8 @@ import {
 import axios from "axios";
 
 
-const host=""
+const host=process.env.REACT_APP_HOST
+
 
 // Create Order
 export const createOrder = (order) => async (dispatch) => {

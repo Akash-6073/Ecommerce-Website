@@ -5,7 +5,8 @@ import {
 } from "../constants/cartConstants";
 import axios from "axios";
 
-const host=""
+const host=process.env.REACT_APP_HOST
+
 
 // Add to Cart
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
