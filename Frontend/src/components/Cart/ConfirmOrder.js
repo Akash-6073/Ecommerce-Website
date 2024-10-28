@@ -42,6 +42,7 @@ const ConfirmOrder = () => {
         };
         sessionStorage.setItem("orderInfo",JSON.stringify(data))
         navigate('/process/payment')
+        // navigate('/')
     }
 //     const createdAtDate = new Date(item.createdAt);
 //     createdAtDate.setDate(createdAtDate.getDate() + ndays);
